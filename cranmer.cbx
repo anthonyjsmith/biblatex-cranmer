@@ -1,0 +1,47 @@
+\ProvidesFile{cranmer.cbx}[$Id: 2011/11/6 v0.1 cranmer biblatex citation style$]
+
+% AJS - see /usr/local/texlive/2017/texmf-dist/tex/latex/biblatex/cbx/verbose-ibid.cbx
+\RequireCitationStyle{verbose-ibid}
+
+% AJS - custom strings
+\DeclareLanguageMapping{british}{british-cranmer}
+
+\ExecuteBibliographyOptions{citetracker=context,ibidtracker=constrict,
+                            pagetracker, autocite=footnote,
+                            urldate=long} % AJS
+
+\DeclareLabelname[book]{%
+  \field{author}
+  \field{editor}
+  \field{translator}
+}
+
+\renewcommand*{\newunitpunct}{\addcomma\addspace}
+\renewbibmacro{in:}{}
+\renewbibmacro*{cite:citepages}{}
+
+\renewbibmacro*{cite:full}{%
+  \usebibmacro{cite:full:citepages}%
+  \printtext[bibhypertarget]{%
+    \usedriver
+      {\DeclareNameAlias{sortname}{default}}
+      {\thefield{entrytype}}}%
+  \usebibmacro{shorthandintro}}
+
+\renewbibmacro*{cite}{%
+  \ifciteseen
+    {\iffieldundef{shorthand}
+       % AJS - Cranmer - no ibid
+%       {\ifboolexpr{
+%          test {\ifciteibid}
+%	  and
+%	  not test {\iffirstonpage}
+%        }
+%          {\usebibmacro{cite:ibid}}
+%          {\usebibmacro{cite:short}}}
+       {\usebibmacro{cite:short}}
+       {\usebibmacro{cite:shorthand}}}
+    {\usebibmacro{cite:full}}}
+
+
+\endinput
